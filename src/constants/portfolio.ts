@@ -47,118 +47,118 @@ export const portfolio = {
   about: {
     short: "I design and build AI-powered applications using Python, LLMs, RAG, FastAPI, React, and Machine Learning.",
     bio: [
-      "I am a Data Science & AI undergraduate dedicated to architecting intelligent software systems that bridge cutting-edge AI research with production-grade engineering.",
-      "My core expertise centers around Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), Vector Search, Deep Learning, and end-to-end full-stack AI integration.",
-      "Whether it's optimizing vector embeddings, fine-tuning neural networks, or crafting high-performance RESTful APIs with FastAPI and React, I focus on delivering scalable, measurable impact."
+      "I am a Data Science & AI student dedicated to architecting intelligent software systems that bridge cutting-edge AI research with production-grade engineering.",
+      "My core expertise centers around Machine Learning recommendation engines, automated data analysis platforms, Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), and full-stack AI integration.",
+      "Whether it's building intelligent recommendation engines, automating exploratory data analysis, or fine-tuning machine learning models, I focus on delivering practical, high-impact AI solutions."
     ],
     education: "B.Sc. (Hons.) Data Science & AI",
     location: "India",
     availability: "Available for AI Engineering Roles & Collaborations",
     stats: [
-      { label: "AI Models & Pipelines", value: "15+" },
-      { label: "RAG & LLM Systems", value: "8+" },
-      { label: "Github Commits", value: "500+" },
+      { label: "Real AI Projects Deployed", value: "4+" },
+      { label: "Live Streamlit Apps", value: "2+" },
+      { label: "Github Repositories", value: "10+" },
       { label: "Core Tech Stack", value: "12+" }
     ]
   },
   skillsCategories: [
     {
+      category: "Machine Learning & AI",
+      skills: [
+        { name: "Recommendation Systems", level: 95, icon: "Brain", description: "Collaborative filtering, content-based recommendation, hybrid career advisors." },
+        { name: "Automated Data Analytics", level: 95, icon: "BarChart3", description: "Automated EDA, statistical modeling, feature selection & pipeline design." },
+        { name: "Scikit-Learn & ML Algorithms", level: 92, icon: "Cpu", description: "Random Forest, XGBoost, Clustering, SVM, Regression, Model Evaluation." },
+        { name: "PyTorch & Deep Learning", level: 88, icon: "Flame", description: "Neural network architectures, PyTorch, Transformers, CNNs." }
+      ]
+    },
+    {
       category: "Generative AI & LLMs",
       skills: [
-        { name: "Retrieval-Augmented Gen (RAG)", level: 95, icon: "Bot", description: "Advanced chunking, hybrid search, reranking, FAISS & ChromaDB." },
-        { name: "LangChain & LlamaIndex", level: 90, icon: "Brain", description: "Multi-agent workflows, tool routing, memory, and chain orchestration." },
-        { name: "LLM APIs & Prompt Eng", level: 95, icon: "Cpu", description: "Gemini, OpenAI GPT-4, Claude APIs, structured JSON output." },
-        { name: "Fine-Tuning & Quantization", level: 80, icon: "Zap", description: "LoRA, QLoRA, Hugging Face Transformers, PEFT techniques." }
+        { name: "Retrieval-Augmented Gen (RAG)", level: 92, icon: "Bot", description: "Vector databases, semantic search, hybrid retrieval, FAISS & ChromaDB." },
+        { name: "LangChain & LlamaIndex", level: 90, icon: "Brain", description: "Agentic workflows, prompt routing, memory, tool integration." },
+        { name: "LLM APIs & Prompt Eng", level: 95, icon: "Zap", description: "Gemini, GPT-4, Claude APIs, structured JSON prompt engineering." }
       ]
     },
     {
-      category: "Machine Learning & DL",
+      category: "Python & Data Science",
       skills: [
-        { name: "PyTorch & TensorFlow", level: 88, icon: "Flame", description: "Custom neural network architecture, CNNs, Transformers." },
-        { name: "Scikit-Learn & ML Algorithms", level: 92, icon: "BarChart3", description: "Regression, Random Forest, XGBoost, Clustering, Feature Engineering." },
-        { name: "Computer Vision & NLP", level: 85, icon: "Eye", description: "OpenCV, spaCy, NLTK, Sentiment Analysis, Text Embeddings." }
-      ]
-    },
-    {
-      category: "Backend & Data Infra",
-      skills: [
-        { name: "Python & FastAPI", level: 95, icon: "Server", description: "Async REST APIs, WebSockets, OpenAPI documentation, Pydantic." },
-        { name: "Vector Databases", level: 90, icon: "Database", description: "FAISS, Chroma, Pinecone, Pgvector, semantic similarity." },
-        { name: "SQL & PostgreSQL", level: 85, icon: "Table", description: "Database design, indexing, complex query optimization." }
+        { name: "Python & Streamlit", level: 96, icon: "Server", description: "Interactive data apps, live model deployment, Streamlit Cloud." },
+        { name: "Pandas & NumPy", level: 95, icon: "Table", description: "Data manipulation, ETL pipelines, array processing, analytics." },
+        { name: "Vector Databases & SQL", level: 90, icon: "Database", description: "FAISS, Chroma, PostgreSQL, relational schema & vector indices." }
       ]
     },
     {
       category: "Frontend & Full Stack",
       skills: [
-        { name: "React & TypeScript", level: 88, icon: "Code2", description: "Modern React 19, custom hooks, state management, Vite." },
-        { name: "Tailwind CSS & Sci-Fi UI", level: 92, icon: "Layout", description: "Glassmorphism, responsive grid, dynamic animations, dark mode." }
+        { name: "React & TypeScript", level: 88, icon: "Code2", description: "Modern React 19, Vite, custom hooks, component architecture." },
+        { name: "Tailwind CSS & Sci-Fi UI", level: 92, icon: "Layout", description: "Glassmorphism, dark aesthetic, responsive web design." }
       ]
     }
   ] as SkillCategory[],
   projects: [
+    {
+      id: "ai-career-advisor",
+      title: "AI Career Advisor",
+      subtitle: "Intelligent Machine Learning Recommendation System",
+      category: "Machine Learning",
+      description: "An intelligent machine learning recommendation system that analyzes candidate profiles, skill sets, and industry demand to recommend personalized career paths and learning roadmaps.",
+      longDescription: "Developed an end-to-end intelligent career advisor powered by machine learning classification algorithms and semantic skill matching. The system evaluates user inputs against industry skill matrices, generates confidence scores for target roles, and provides actionable recommendations.",
+      tags: ["Python", "Machine Learning", "Streamlit", "Scikit-Learn", "Pandas", "Recommendation Systems"],
+      github: "https://github.com/vishalok007/Al-Career-Advisor---Intelligent-Machine-Learning-Recommendation-System",
+      demoUrl: "https://dqpxbjdk4lkej2v9uayhcp.streamlit.app/",
+      featured: true,
+      architecture: [
+        "User Profile & Skill Matrix Feature Extraction",
+        "Machine Learning Recommendation Engine (Scikit-Learn Classifier & Similarity Matrix)",
+        "Interactive Streamlit Cloud Deployment with Real-time Career Roadmaps"
+      ],
+      metrics: [
+        { label: "Recommendation Match", value: "95%" },
+        { label: "Live App", value: "Streamlit Cloud" },
+        { label: "Status", value: "Production Deployed" }
+      ]
+    },
+    {
+      id: "ai-data-analyst",
+      title: "AI Data Analyst Platform",
+      subtitle: "Intelligent Data Analysis & Machine Learning Platform",
+      category: "Full Stack",
+      description: "An automated data analysis platform that ingests raw datasets, performs exploratory data analysis (EDA), generates interactive statistical visual charts, and trains ML models instantly.",
+      longDescription: "Built a full-featured automated data analyst web platform. Users can upload CSV/Excel files to automatically get data cleaning insights, correlation heatmaps, anomaly detection, distribution plots, and automated baseline ML model predictions.",
+      tags: ["Python", "Streamlit", "Pandas", "Seaborn", "Scikit-Learn", "Automated EDA"],
+      github: "https://github.com/vishalok007/Al-Data-Analyst-An-Intelligent-Data-Analysis-and-Machine-Learning-Platform",
+      demoUrl: "https://3cibvktrrltbwhrdg39ieh.streamlit.app/",
+      featured: true,
+      architecture: [
+        "Automated Data Cleaning, Missing Value Imputation & Type Inference",
+        "Statistical Plotting Engine (Plotly / Seaborn / Matplotlib Integration)",
+        "Automated AutoML Pipeline for Regression & Classification Tasks"
+      ],
+      metrics: [
+        { label: "Automated Insights", value: "Instant" },
+        { label: "Live App", value: "Streamlit Cloud" },
+        { label: "Status", value: "Production Deployed" }
+      ]
+    },
     {
       id: "enterprise-rag",
       title: "Enterprise Document RAG Pipeline",
       subtitle: "Multi-modal RAG with Hybrid Vector Search & Reranking",
       category: "GenAI",
       description: "Production-grade Retrieval-Augmented Generation system capable of parsing PDF, DOCX, and CSV files with hybrid semantic search and Cohere reranking.",
-      longDescription: "Built an end-to-end intelligent document retrieval engine that processes heterogeneous business documents into optimized vector embeddings stored in FAISS and ChromaDB. Utilizes hybrid BM25 + dense vector search followed by cross-encoder reranking to achieve 94%+ retrieval precision before feeding context to Gemini 1.5 Pro.",
+      longDescription: "Built an intelligent document retrieval engine that processes heterogeneous business documents into vector embeddings stored in FAISS and ChromaDB. Utilizes dense vector search followed by cross-encoder reranking to achieve high precision before feeding context to LLMs.",
       tags: ["Python", "FastAPI", "FAISS", "LangChain", "Gemini API", "React"],
       github: "https://github.com/vishalok007/portfolio",
-      demoUrl: "https://github.com/vishalok007/portfolio",
+      demoUrl: "https://portfolio-flax-tau-ccf42iih03.vercel.app",
       featured: true,
       architecture: [
         "Document Parsing & Recursive Character Text Splitting",
-        "Hybrid Search (Dense HuggingFace Embeddings + Sparse BM25)",
-        "Cross-Encoder Re-ranking layer for top-k selection",
-        "FastAPI async backend streaming responses via Server-Sent Events"
+        "Hybrid Vector Search (Dense HuggingFace Embeddings + FAISS)",
+        "FastAPI backend streaming responses to React frontend"
       ],
       metrics: [
         { label: "Retrieval Accuracy", value: "94.2%" },
-        { label: "Avg Latency", value: "< 450ms" },
-        { label: "Docs Processed", value: "10,000+" }
-      ]
-    },
-    {
-      id: "autonomous-code-agent",
-      title: "AI Code Analysis & Debugger Agent",
-      subtitle: "Multi-agent System for Automated Code Review & Refactoring",
-      category: "GenAI",
-      description: "Autonomous LLM agent system that scans GitHub repositories, detects anti-patterns, runs static analysis, and automatically generates pull request recommendations.",
-      longDescription: "Engineered a multi-agent workflow leveraging LangGraph and AST parsing to autonomously analyze code structure, detect security vulnerabilities, generate unit test suites, and write step-by-step refactoring proposals.",
-      tags: ["Python", "LangChain", "LangGraph", "AST Parsing", "LLMs", "TypeScript"],
-      github: "https://github.com/vishalok007/portfolio",
-      demoUrl: "https://github.com/vishalok007/portfolio",
-      featured: true,
-      architecture: [
-        "Repository AST Parsing & Dependency Graph Generation",
-        "Multi-Agent Supervisor Routing (Linter Agent, Tester Agent, Reviewer Agent)",
-        "Self-Correction loop validating generated code syntax"
-      ],
-      metrics: [
-        { label: "Bug Detection Rate", value: "88%" },
-        { label: "Review Speedup", value: "5x faster" }
-      ]
-    },
-    {
-      id: "customer-churn-predictor",
-      title: "Predictive Analytics & Customer Churn Engine",
-      subtitle: "Machine Learning Model Pipeline with Real-Time Inference",
-      category: "Machine Learning",
-      description: "End-to-end ML pipeline utilizing XGBoost, Random Forest, and SHAP interpretability to predict enterprise customer churn with high precision.",
-      longDescription: "Developed a predictive machine learning system using historical telemetry and transactional data. Designed feature engineering pipelines, handled class imbalance using SMOTE, and integrated SHAP values for explainable AI metrics provided via an interactive dashboard.",
-      tags: ["Python", "Scikit-Learn", "XGBoost", "SHAP", "Pandas", "Streamlit"],
-      github: "https://github.com/vishalok007/portfolio",
-      demoUrl: "https://github.com/vishalok007/portfolio",
-      featured: true,
-      architecture: [
-        "Data Preprocessing & Automated Feature Selection",
-        "XGBoost Classifier tuned via Bayesian Optimization",
-        "SHAP (SHapley Additive exPlanations) for model transparency"
-      ],
-      metrics: [
-        { label: "ROC-AUC Score", value: "0.93" },
-        { label: "Precision", value: "91.5%" }
+        { label: "Avg Latency", value: "< 450ms" }
       ]
     },
     {
@@ -166,11 +166,11 @@ export const portfolio = {
       title: "Real-Time NLP Sentiment Analyzer",
       subtitle: "Fine-Tuned DistilBERT for Social & Product Analytics",
       category: "NLP",
-      description: "High-throughput sentiment analysis system fine-tuned on custom domain datasets with real-time WebSocket stream processing.",
-      longDescription: "Fine-tuned DistilBERT on multi-lingual customer review streams. Deployed as a high-concurrency FastAPI microservice containerized with Docker and connected to a live React visualization frontend.",
+      description: "High-throughput sentiment analysis system fine-tuned on custom domain datasets with real-time stream evaluation.",
+      longDescription: "Fine-tuned DistilBERT on customer review streams. Deployed as a high-concurrency FastAPI microservice with interactive visualization.",
       tags: ["PyTorch", "Hugging Face", "BERT", "FastAPI", "React", "Docker"],
       github: "https://github.com/vishalok007/portfolio",
-      demoUrl: "https://github.com/vishalok007/portfolio",
+      demoUrl: "https://portfolio-flax-tau-ccf42iih03.vercel.app",
       featured: false,
       architecture: [
         "DistilBERT fine-tuning using Hugging Face Trainer API",
@@ -190,20 +190,20 @@ export const portfolio = {
       organization: "Academic Program",
       description: "Specializing in Machine Learning, Statistical Inference, Deep Learning, Natural Language Processing, and Software Engineering principles.",
       highlights: [
-        "Built core expertise in Python, PyTorch, SQL, Algorithms, and Mathematics for ML",
-        "Developed end-to-end LLM & RAG applications for real-world projects",
-        "Lead peer research groups on Generative AI and Transformer architectures"
+        "Built and deployed live AI applications on Streamlit Cloud and Vercel",
+        "Engineered intelligent recommendation engines and automated EDA platforms",
+        "Developed end-to-end LLM & RAG applications for real-world projects"
       ]
     },
     {
       year: "2024",
-      role: "AI & ML Project Lead",
-      organization: "Autonomous Projects & Research",
-      description: "Architected multiple production-ready AI applications, including document search pipelines, AI agents, and predictive ML models.",
+      role: "AI & ML Project Developer",
+      organization: "Autonomous Projects & Open Source",
+      description: "Architected and published flagship AI projects including AI Career Advisor and AI Data Analyst platform.",
       highlights: [
-        "Engineered RAG pipelines with vector databases (FAISS, Chroma)",
-        "Integrated modern LLM APIs (Gemini, OpenAI) with React & FastAPI",
-        "Published technical repositories and interactive demos"
+        "Engineered recommendation systems using Python & Scikit-Learn",
+        "Built automated exploratory data analysis engines with Streamlit",
+        "Published repositories and live production apps"
       ]
     }
   ] as TimelineItem[],
