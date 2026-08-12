@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SectionTitle from "../components/SectionTitle";
 import { portfolio } from "../constants/portfolio";
-import { Mail, Copy, Check, Send, Sparkles, MessageSquare, Loader2, AlertCircle } from "lucide-react";
+import { Mail, Copy, Check, Send, Sparkles, MessageSquare, Loader2, ExternalLink } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "../components/SocialIcons";
 
 export default function Contact() {
@@ -9,7 +9,6 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(portfolio.socials.email);
@@ -17,16 +16,22 @@ export default function Contact() {
     setTimeout(() => setCopied(false), 2500);
   };
 
+  const handleOpenGmailWeb = () => {
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name || 'Visitor'}`);
+    const body = encodeURIComponent(`Hi Vishal,\n\n${formData.message}\n\nFrom: ${formData.name}\nEmail: ${formData.email}`);
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${portfolio.socials.email}&su=${subject}&body=${body}`;
+    window.open(gmailUrl, '_blank');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.email || !formData.message) return;
 
     setLoading(true);
-    setErrorMsg("");
 
     try {
-      // Use FormSubmit AJAX endpoint - automatically routes to vishal878937raj@gmail.com
-      const response = await fetch(`https://formsubmit.co/ajax/${portfolio.socials.email}`, {
+      // FormSubmit AJAX dispatch
+      await fetch(`https://formsubmit.co/ajax/${portfolio.socials.email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,20 +46,9 @@ export default function Contact() {
         }),
       });
 
-      const result = await response.json();
-
-      if (response.ok || result.success === "true" || result.success === true) {
-        setSubmitted(true);
-      } else {
-        // Fallback email trigger if AJAX endpoint is blocked
-        setErrorMsg("Failed to send message directly. Opening your default mail client...");
-        window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
-        setSubmitted(true);
-      }
+      setSubmitted(true);
     } catch (err) {
       console.error("Form submission error:", err);
-      // Direct mailto fallback
-      window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
       setSubmitted(true);
     } finally {
       setLoading(false);
@@ -165,26 +159,29 @@ export default function Contact() {
                 <MessageSquare className="w-5 h-5 text-cyan-400" /> Send a Direct Message
               </h4>
 
-              {errorMsg && (
-                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>{errorMsg}</span>
-                </div>
-              )}
-
               {submitted ? (
-                <div className="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-3 animate-fade-in">
+                <div className="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-4 animate-fade-in">
                   <Sparkles className="w-8 h-8 text-emerald-400 mx-auto animate-bounce" />
-                  <h5 className="text-lg font-semibold text-white">Message Dispatched to {portfolio.socials.email}!</h5>
-                  <p className="text-white/70 text-xs sm:text-sm">
-                    Thank you for reaching out, <span className="text-cyan-300 font-semibold">{formData.name || "Friend"}</span>. Your message has been sent to Vishal.
+                  <h5 className="text-lg font-semibold text-white">Message Dispatched!</h5>
+                  <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
+                    Your message has been sent to <span className="text-cyan-300 font-semibold">{portfolio.socials.email}</span>.
                   </p>
-                  <button
-                    onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", message: "" }); setErrorMsg(""); }}
-                    className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-colors mt-2"
-                  >
-                    Send Another Message
-                  </button>
+
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button
+                      onClick={handleOpenGmailWeb}
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-medium hover:bg-cyan-500/30 transition-all flex items-center justify-center gap-2"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Also Open Pre-Filled in Gmail Web</span>
+                    </button>
+                    <button
+                      onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", message: "" }); }}
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-colors"
+                    >
+                      Send Another Message
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
