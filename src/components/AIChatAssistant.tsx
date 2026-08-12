@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type ReactNode } from "react";
 import { Bot, X, Send, Sparkles, User, RefreshCw } from "lucide-react";
 import { portfolio } from "../constants/portfolio";
 
@@ -38,6 +38,74 @@ export default function AIChatAssistant() {
     "What is his education background?",
     "How can I contact Vishal for a role?"
   ];
+
+  // Helper function to render rich formatted text with bold highlights and clickable markdown links
+  const renderFormattedMessage = (text: string): ReactNode => {
+    const lines = text.split("\n");
+
+    return (
+      <div className="space-y-1.5 leading-relaxed font-sans">
+        {lines.map((line, lineIdx) => {
+          if (!line.trim()) return <div key={lineIdx} className="h-1" />;
+
+          // Process markdown links [text](url) and bold **text**
+          const parts: ReactNode[] = [];
+          let currentStr = line;
+          let keyCounter = 0;
+
+          // Regular expression for [label](url) and **bold**
+          const regex = /(\[.*?\]\(.*?\)|\*\*.*?\*\*)/g;
+          let match;
+          let lastIdx = 0;
+
+          while ((match = regex.exec(currentStr)) !== null) {
+            if (match.index > lastIdx) {
+              parts.push(currentStr.substring(lastIdx, match.index));
+            }
+
+            const token = match[0];
+            if (token.startsWith("[") && token.includes("](")) {
+              const label = token.substring(1, token.indexOf("]"));
+              const url = token.substring(token.indexOf("](") + 2, token.length - 1);
+              parts.push(
+                <a
+                  key={`link-${lineIdx}-${keyCounter++}`}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 font-medium underline font-mono hover:text-cyan-300 transition-colors"
+                >
+                  {label}
+                </a>
+              );
+            } else if (token.startsWith("**") && token.endsWith("**")) {
+              const content = token.substring(2, token.length - 2);
+              parts.push(
+                <strong
+                  key={`bold-${lineIdx}-${keyCounter++}`}
+                  className="font-semibold text-cyan-300"
+                >
+                  {content}
+                </strong>
+              );
+            }
+
+            lastIdx = regex.lastIndex;
+          }
+
+          if (lastIdx < currentStr.length) {
+            parts.push(currentStr.substring(lastIdx));
+          }
+
+          return (
+            <p key={lineIdx} className="text-xs text-white/90">
+              {parts}
+            </p>
+          );
+        })}
+      </div>
+    );
+  };
 
   // System context facts about Vishal
   const systemKnowledge = `
@@ -95,22 +163,22 @@ export default function AIChatAssistant() {
     const q = userQuery.toLowerCase();
 
     if (q.includes("skill") || q.includes("tech") || q.includes("stack") || q.includes("python")) {
-      return `Vishal specializes in **Machine Learning & Generative AI**. Core skills include **Python**, **PyTorch**, **Scikit-Learn**, **LangChain**, **RAG**, **FAISS Vector Search**, **FastAPI**, and **React 19 with TypeScript**.`;
+      return `Vishal specializes in **Machine Learning & Generative AI**.\n\nCore technical skills include **Python**, **PyTorch**, **Scikit-Learn**, **LangChain**, **RAG**, **FAISS Vector Search**, **FastAPI**, and **React 19 with TypeScript**.`;
     }
 
     if (q.includes("project") || q.includes("career advisor") || q.includes("data analyst") || q.includes("rag")) {
-      return `Vishal has built flagship live projects:\n\n1. 🎯 **AI Career Advisor**: Intelligent ML Recommendation System ([Live App](https://dqpxbjdk4lkej2v9uayhcp.streamlit.app/))\n2. 📊 **AI Data Analyst**: Automated EDA & AutoML Platform ([Live App](https://3cibvktrrltbwhrdg39ieh.streamlit.app/))\n3. ⚡ **Enterprise RAG Pipeline**: Multi-modal document search with FAISS & reranking.`;
+      return `Vishal has built flagship live projects:\n\n🎯 **AI Career Advisor**: Intelligent ML Recommendation System ([Live Streamlit App](https://dqpxbjdk4lkej2v9uayhcp.streamlit.app/))\n\n📊 **AI Data Analyst**: Automated EDA & AutoML Platform ([Live Streamlit App](https://3cibvktrrltbwhrdg39ieh.streamlit.app/))\n\n⚡ **Enterprise RAG Pipeline**: Multi-modal document search with FAISS & reranking.`;
     }
 
     if (q.includes("education") || q.includes("degree") || q.includes("university") || q.includes("college")) {
-      return `Vishal is pursuing **B.Sc. (Hons.) Data Science & AI**. He specializes in Machine Learning, Statistical Inference, Deep Learning, NLP, and Software Engineering.`;
+      return `Vishal is pursuing **B.Sc. (Hons.) Data Science & AI**.\n\nHe specializes in Machine Learning, Statistical Inference, Deep Learning, Natural Language Processing, and Software Engineering.`;
     }
 
     if (q.includes("contact") || q.includes("email") || q.includes("hire") || q.includes("reach") || q.includes("job")) {
-      return `You can reach Vishal directly via email at **${portfolio.socials.email}** or connect on GitHub at [github.com/vishalok007](https://github.com/vishalok007). He is available for AI Engineering roles and collaborations!`;
+      return `You can reach Vishal directly via email at **${portfolio.socials.email}** or connect on GitHub at [github.com/vishalok007](https://github.com/vishalok007).\n\nHe is available for AI Engineering roles and collaborations!`;
     }
 
-    return `Vishal is a Data Science & AI student focused on Machine Learning, LLMs, and RAG architectures. He has built live projects like the **AI Career Advisor** and **AI Data Analyst**. Feel free to email him directly at **${portfolio.socials.email}**!`;
+    return `Vishal is a Data Science & AI student focused on Machine Learning, LLMs, and RAG architectures.\n\nHe has built live projects like the **AI Career Advisor** and **AI Data Analyst**.\n\nFeel free to email him directly at **${portfolio.socials.email}**!`;
   };
 
   const handleSend = async (textToSend?: string) => {
@@ -162,7 +230,7 @@ export default function AIChatAssistant() {
 
       {/* Floating Chat Drawer Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[92vw] sm:w-[390px] h-[540px] max-h-[85vh] bg-slate-950/95 border border-cyan-500/30 backdrop-blur-2xl rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in font-sans">
+        <div className="fixed bottom-6 right-6 z-50 w-[94vw] sm:w-[430px] h-[560px] max-h-[85vh] bg-slate-950/95 border border-cyan-500/30 backdrop-blur-2xl rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in font-sans">
           {/* Header */}
           <div className="px-5 py-4 bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -200,14 +268,18 @@ export default function AIChatAssistant() {
                 )}
 
                 <div
-                  className={`max-w-[82%] p-3 rounded-2xl leading-relaxed ${
+                  className={`max-w-[85%] p-3.5 rounded-2xl ${
                     msg.sender === "user"
                       ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-br-none shadow-md"
-                      : "bg-white/5 border border-white/10 text-white/90 rounded-bl-none font-sans"
+                      : "bg-slate-900/90 border border-white/10 text-white/90 rounded-bl-none font-sans"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{msg.text}</p>
-                  <span className="block text-[9px] text-white/40 mt-1 text-right font-mono">{msg.timestamp}</span>
+                  {msg.sender === "user" ? (
+                    <p className="text-xs text-white leading-relaxed font-sans">{msg.text}</p>
+                  ) : (
+                    renderFormattedMessage(msg.text)
+                  )}
+                  <span className="block text-[9px] text-white/40 mt-1.5 text-right font-mono">{msg.timestamp}</span>
                 </div>
 
                 {msg.sender === "user" && (
@@ -228,7 +300,7 @@ export default function AIChatAssistant() {
           </div>
 
           {/* Quick Prompts Bar */}
-          <div className="p-2 border-t border-white/10 bg-black/40 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <div className="p-2.5 border-t border-white/10 bg-black/40 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
             {quickPrompts.map((prompt, i) => (
               <button
                 key={i}
