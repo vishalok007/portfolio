@@ -1,9 +1,13 @@
-import { ArrowRight, Sparkles, Mail, Terminal } from 'lucide-react';
+import { ArrowRight, Sparkles, Mail, Terminal, FileText } from 'lucide-react';
 import { TypeAnimation } from "react-type-animation";
 import { portfolio } from "../constants/portfolio";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "./SocialIcons";
 
-export default function Hero() {
+type Props = {
+  onOpenResume?: () => void;
+};
+
+export default function Hero({ onOpenResume }: Props) {
   const handleScrollTo = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     const el = document.getElementById(id);
@@ -78,23 +82,33 @@ export default function Hero() {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-sm mb-10">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mb-10">
           <a
             href="#projects"
             onClick={(e) => handleScrollTo(e, 'projects')}
-            className="w-full sm:w-auto px-7 py-3 bg-white text-black font-semibold text-xs rounded-xl btn-cut hover:bg-white/90 transition-all flex items-center justify-center gap-2 group"
+            className="w-full sm:w-auto px-6 py-3.5 bg-white text-black font-semibold text-xs rounded-xl btn-cut hover:bg-white/90 transition-all flex items-center justify-center gap-2 group"
           >
             <span>Explore Projects</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </a>
 
+          {onOpenResume && (
+            <button
+              onClick={onOpenResume}
+              className="w-full sm:w-auto px-6 py-3.5 bg-white/10 border border-white/20 text-white font-medium text-xs rounded-xl hover:bg-white/20 transition-all flex items-center justify-center gap-2 font-mono"
+            >
+              <FileText className="w-3.5 h-3.5 text-cyan-400" />
+              <span>View Resume</span>
+            </button>
+          )}
+
           <a
             href="#playground"
             onClick={(e) => handleScrollTo(e, 'playground')}
-            className="w-full sm:w-auto px-7 py-3 bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 font-medium text-xs rounded-xl hover:bg-cyan-500/20 hover:border-cyan-400 transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3.5 bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 font-medium text-xs rounded-xl hover:bg-cyan-500/20 hover:border-cyan-400 transition-all flex items-center justify-center gap-2"
           >
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Interactive AI Sandbox</span>
+            <span>AI Sandbox</span>
           </a>
         </div>
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./section/About";
@@ -7,18 +8,21 @@ import AIPlayground from "./section/AIPlayground";
 import Experience from "./section/Experience";
 import Contact from "./section/Contact";
 import AIChatAssistant from "./components/AIChatAssistant";
+import ResumeModal from "./components/ResumeModal";
 import { portfolio } from "./constants/portfolio";
 import { Terminal, Heart } from "lucide-react";
 
 function App() {
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
+
   return (
     <div className="w-full bg-black min-h-screen font-inter text-white selection:bg-cyan-500 selection:text-black relative">
       {/* Sticky Top Navigation */}
-      <Navbar />
+      <Navbar onOpenResume={() => setIsResumeOpen(true)} />
 
       {/* Main Page Content Sections */}
       <main className="w-full">
-        <Hero />
+        <Hero onOpenResume={() => setIsResumeOpen(true)} />
         <About />
         <Skills />
         <Projects />
@@ -29,6 +33,12 @@ function App() {
 
       {/* Global Interactive AI Assistant Widget */}
       <AIChatAssistant />
+
+      {/* Interactive Resume Modal */}
+      <ResumeModal
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
 
       {/* Footer */}
       <footer className="w-full bg-black border-t border-white/10 py-10 px-4 sm:px-6 lg:px-8">

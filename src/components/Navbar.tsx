@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Terminal, Sparkles, Send } from "lucide-react";
+import { Menu, X, Terminal, Sparkles, Send, FileText } from "lucide-react";
 import { portfolio } from "../constants/portfolio";
 
-export default function Navbar() {
+type Props = {
+  onOpenResume?: () => void;
+};
+
+export default function Navbar({ onOpenResume }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -69,7 +73,7 @@ export default function Navbar() {
             <Terminal className="w-5 h-5 text-cyan-400" />
           </div>
           <div className="flex flex-col">
-            <span className="text-white font-bold tracking-wider text-base flex items-center gap-1.5">
+            <span className="text-white font-bold tracking-wider text-base flex items-center gap-1.5 font-mono">
               {portfolio.name}
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             </span>
@@ -102,18 +106,27 @@ export default function Navbar() {
 
         {/* Action Button */}
         <div className="hidden sm:flex items-center gap-3">
+          {onOpenResume && (
+            <button
+              onClick={onOpenResume}
+              className="px-3.5 py-2 text-xs font-medium text-white/80 bg-white/5 border border-white/15 rounded-xl hover:bg-white/10 hover:text-white transition-all flex items-center gap-1.5 font-mono"
+            >
+              <FileText className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Resume</span>
+            </button>
+          )}
           <a
             href="#playground"
             onClick={(e) => handleNavClick(e, "#playground")}
-            className="px-4 py-2 text-xs font-medium text-cyan-300 bg-cyan-950/40 border border-cyan-500/30 rounded-xl hover:bg-cyan-500/20 hover:border-cyan-400 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 text-xs font-medium text-cyan-300 bg-cyan-950/40 border border-cyan-500/30 rounded-xl hover:bg-cyan-500/20 hover:border-cyan-400 transition-all flex items-center gap-1.5 font-mono"
           >
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Try AI Demo</span>
+            <span>AI Demo</span>
           </a>
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, "#contact")}
-            className="px-4 py-2 text-xs font-semibold text-black bg-white hover:bg-white/90 rounded-xl btn-cut transition-all flex items-center gap-1.5"
+            className="px-4 py-2 text-xs font-semibold text-black bg-white hover:bg-white/90 rounded-xl btn-cut transition-all flex items-center gap-1.5 font-mono"
           >
             <Send className="w-3.5 h-3.5" />
             <span>Get in Touch</span>
@@ -144,10 +157,19 @@ export default function Navbar() {
             </a>
           ))}
           <div className="pt-4 border-t border-white/10 flex flex-col gap-2">
+            {onOpenResume && (
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenResume(); }}
+                className="w-full py-3 text-center text-xs font-medium text-white/90 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center gap-2 font-mono"
+              >
+                <FileText className="w-4 h-4 text-cyan-400" />
+                <span>View Resume PDF</span>
+              </button>
+            )}
             <a
               href="#playground"
               onClick={(e) => handleNavClick(e, "#playground")}
-              className="w-full py-3 text-center text-xs font-medium text-cyan-300 bg-cyan-950/40 border border-cyan-500/30 rounded-xl flex items-center justify-center gap-2"
+              className="w-full py-3 text-center text-xs font-medium text-cyan-300 bg-cyan-950/40 border border-cyan-500/30 rounded-xl flex items-center justify-center gap-2 font-mono"
             >
               <Sparkles className="w-4 h-4" />
               <span>Try Interactive AI Demo</span>
@@ -155,7 +177,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
-              className="w-full py-3 text-center text-xs font-semibold text-black bg-white rounded-xl btn-cut flex items-center justify-center gap-2"
+              className="w-full py-3 text-center text-xs font-semibold text-black bg-white rounded-xl btn-cut flex items-center justify-center gap-2 font-mono"
             >
               <Send className="w-4 h-4" />
               <span>Contact Vishal</span>
