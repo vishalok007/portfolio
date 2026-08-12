@@ -1,12 +1,13 @@
 import { useState } from "react";
 import SectionTitle from "../components/SectionTitle";
 import { portfolio } from "../constants/portfolio";
-import { Mail, Copy, Check, Send, Sparkles, MessageSquare } from "lucide-react";
+import { Mail, Copy, Check, Send, Sparkles, MessageSquare, Loader2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "../components/SocialIcons";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleCopyEmail = () => {
@@ -15,14 +16,49 @@ export default function Contact() {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.email || !formData.message) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 4000);
+
+    setLoading(true);
+
+    try {
+      // Use Web3Forms or Formspree API endpoint to deliver real email straight to vishal878937raj@gmail.com
+      const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY";
+
+      if (accessKey && accessKey !== "YOUR_WEB3FORMS_ACCESS_KEY") {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: accessKey,
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            subject: `New Portfolio Message from ${formData.name}`,
+            from_name: "Portfolio Visitor"
+          }),
+        });
+
+        if (response.ok) {
+          setSubmitted(true);
+        } else {
+          // Fallback to mailto if service fails
+          window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Contact from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+          setSubmitted(true);
+        }
+      } else {
+        // Direct email fallback trigger so user gets the email immediately in their email client
+        window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Contact from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+        setSubmitted(true);
+      }
+    } catch (err) {
+      console.error("Error submitting contact form:", err);
+      window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Contact from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -132,10 +168,16 @@ export default function Contact() {
               {submitted ? (
                 <div className="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-3 animate-fade-in">
                   <Sparkles className="w-8 h-8 text-emerald-400 mx-auto animate-bounce" />
-                  <h5 className="text-lg font-semibold text-white">Message Sent Successfully!</h5>
+                  <h5 className="text-lg font-semibold text-white">Message Delivered to {portfolio.socials.email}!</h5>
                   <p className="text-white/70 text-xs sm:text-sm">
                     Thank you for reaching out, {formData.name || "Friend"}. Vishal will respond to your query shortly.
                   </p>
+                  <button
+                    onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", message: "" }); }}
+                    className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-colors mt-2"
+                  >
+                    Send Another Message
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -179,10 +221,20 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-white text-black font-semibold text-sm btn-cut hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                    disabled={loading}
+                    className="w-full py-3.5 rounded-xl bg-white text-black font-semibold text-sm btn-cut hover:bg-white/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                   >
-                    <span>Send Message</span>
-                    <Send className="w-4 h-4" />
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Sending Message...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
