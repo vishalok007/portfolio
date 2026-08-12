@@ -6,12 +6,13 @@ import Projects from "./section/Projects";
 import AIPlayground from "./section/AIPlayground";
 import Experience from "./section/Experience";
 import Contact from "./section/Contact";
+import AIChatAssistant from "./components/AIChatAssistant";
 import { portfolio } from "./constants/portfolio";
 import { Terminal, Heart } from "lucide-react";
 
 function App() {
   return (
-    <div className="w-full bg-black min-h-screen font-inter text-white selection:bg-cyan-500 selection:text-black">
+    <div className="w-full bg-black min-h-screen font-inter text-white selection:bg-cyan-500 selection:text-black relative">
       {/* Sticky Top Navigation */}
       <Navbar />
 
@@ -25,6 +26,9 @@ function App() {
         <Experience />
         <Contact />
       </main>
+
+      {/* Global Interactive AI Assistant Widget */}
+      <AIChatAssistant />
 
       {/* Footer */}
       <footer className="w-full bg-black border-t border-white/10 py-10 px-4 sm:px-6 lg:px-8">
