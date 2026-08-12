@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SectionTitle from "../components/SectionTitle";
 import { portfolio } from "../constants/portfolio";
-import { Mail, Copy, Check, Send, Sparkles, MessageSquare, Loader2 } from "lucide-react";
+import { Mail, Copy, Check, Send, Sparkles, MessageSquare, Loader2, AlertCircle } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "../components/SocialIcons";
 
 export default function Contact() {
@@ -9,6 +9,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(portfolio.socials.email);
@@ -21,40 +22,39 @@ export default function Contact() {
     if (!formData.email || !formData.message) return;
 
     setLoading(true);
+    setErrorMsg("");
 
     try {
-      // Use Web3Forms or Formspree API endpoint to deliver real email straight to vishal878937raj@gmail.com
-      const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY";
+      // Use FormSubmit AJAX endpoint - automatically routes to vishal878937raj@gmail.com
+      const response = await fetch(`https://formsubmit.co/ajax/${portfolio.socials.email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Portfolio Inquiry from ${formData.name}`,
+          _template: "table"
+        }),
+      });
 
-      if (accessKey && accessKey !== "YOUR_WEB3FORMS_ACCESS_KEY") {
-        const response = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            access_key: accessKey,
-            name: formData.name,
-            email: formData.email,
-            message: formData.message,
-            subject: `New Portfolio Message from ${formData.name}`,
-            from_name: "Portfolio Visitor"
-          }),
-        });
+      const result = await response.json();
 
-        if (response.ok) {
-          setSubmitted(true);
-        } else {
-          // Fallback to mailto if service fails
-          window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Contact from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
-          setSubmitted(true);
-        }
+      if (response.ok || result.success === "true" || result.success === true) {
+        setSubmitted(true);
       } else {
-        // Direct email fallback trigger so user gets the email immediately in their email client
-        window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Contact from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+        // Fallback email trigger if AJAX endpoint is blocked
+        setErrorMsg("Failed to send message directly. Opening your default mail client...");
+        window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
         setSubmitted(true);
       }
     } catch (err) {
-      console.error("Error submitting contact form:", err);
-      window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Contact from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+      console.error("Form submission error:", err);
+      // Direct mailto fallback
+      window.location.href = `mailto:${portfolio.socials.email}?subject=Portfolio Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
       setSubmitted(true);
     } finally {
       setLoading(false);
@@ -165,15 +165,22 @@ export default function Contact() {
                 <MessageSquare className="w-5 h-5 text-cyan-400" /> Send a Direct Message
               </h4>
 
+              {errorMsg && (
+                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
+
               {submitted ? (
                 <div className="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-3 animate-fade-in">
                   <Sparkles className="w-8 h-8 text-emerald-400 mx-auto animate-bounce" />
-                  <h5 className="text-lg font-semibold text-white">Message Delivered to {portfolio.socials.email}!</h5>
+                  <h5 className="text-lg font-semibold text-white">Message Dispatched to {portfolio.socials.email}!</h5>
                   <p className="text-white/70 text-xs sm:text-sm">
-                    Thank you for reaching out, {formData.name || "Friend"}. Vishal will respond to your query shortly.
+                    Thank you for reaching out, <span className="text-cyan-300 font-semibold">{formData.name || "Friend"}</span>. Your message has been sent to Vishal.
                   </p>
                   <button
-                    onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", message: "" }); }}
+                    onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", message: "" }); setErrorMsg(""); }}
                     className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-colors mt-2"
                   >
                     Send Another Message
