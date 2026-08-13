@@ -10,11 +10,32 @@ import Experience from "./section/Experience";
 import Contact from "./section/Contact";
 import AIChatAssistant from "./components/AIChatAssistant";
 import ResumeModal from "./components/ResumeModal";
+import CinematicSpaceLanding from "./pages/CinematicSpaceLanding";
 import { portfolio } from "./constants/portfolio";
-import { Terminal, Heart } from "lucide-react";
+import { Terminal, Heart, Rocket, UserCheck } from "lucide-react";
 
 function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
+  const [currentView, setCurrentView] = useState<"portfolio" | "cinematic-space">("portfolio");
+
+  if (currentView === "cinematic-space") {
+    return (
+      <div className="relative w-full min-h-screen bg-black">
+        {/* Toggle Switcher Floating Bar */}
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 border border-white/20 backdrop-blur-xl shadow-2xl">
+          <button
+            onClick={() => setCurrentView("portfolio")}
+            className="px-3 py-1.5 rounded-full text-xs font-mono bg-white text-black font-semibold hover:bg-cyan-300 transition-colors flex items-center gap-1.5"
+          >
+            <UserCheck className="w-3.5 h-3.5" />
+            <span>Back to Vishal's Portfolio</span>
+          </button>
+        </div>
+
+        <CinematicSpaceLanding />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-black min-h-screen font-inter text-white selection:bg-cyan-500 selection:text-black relative">
@@ -23,6 +44,20 @@ function App() {
 
       {/* Main Page Content Sections */}
       <main className="w-full">
+        {/* Banner launcher to switch to Space Landing Page */}
+        <div className="w-full bg-gradient-to-r from-purple-950 via-slate-900 to-cyan-950 border-b border-cyan-500/30 py-2.5 px-4 text-center flex items-center justify-center gap-3 pt-24">
+          <span className="text-xs font-mono text-cyan-300 flex items-center gap-1.5">
+            <Rocket className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+            <span>Cinematic Space-Travel Experience Enabled!</span>
+          </span>
+          <button
+            onClick={() => setCurrentView("cinematic-space")}
+            className="px-3 py-1 rounded-full bg-cyan-500 text-black text-[11px] font-mono font-bold hover:bg-cyan-300 transition-colors shadow-lg"
+          >
+            Launch Space Demo →
+          </button>
+        </div>
+
         <Hero onOpenResume={() => setIsResumeOpen(true)} />
         <About />
         <Skills />
