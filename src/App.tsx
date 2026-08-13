@@ -5,6 +5,7 @@ import About from "./section/About";
 import Skills from "./section/Skills";
 import Projects from "./section/Projects";
 import AIPlayground from "./section/AIPlayground";
+import MLExplorer from "./section/MLExplorer";
 import Experience from "./section/Experience";
 import Contact from "./section/Contact";
 import AIChatAssistant from "./components/AIChatAssistant";
@@ -27,6 +28,7 @@ function App() {
         <Skills />
         <Projects />
         <AIPlayground />
+        <MLExplorer />
         <Experience />
         <Contact />
       </main>

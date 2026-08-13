@@ -2,6 +2,7 @@ import { ArrowRight, Sparkles, Mail, Terminal, FileText } from 'lucide-react';
 import { TypeAnimation } from "react-type-animation";
 import { portfolio } from "../constants/portfolio";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "./SocialIcons";
+import AudioGreeting from "./AudioGreeting";
 
 type Props = {
   onOpenResume?: () => void;
@@ -34,15 +35,18 @@ export default function Hero({ onOpenResume }: Props) {
       {/* Main Content Area */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center items-center text-center">
         {/* Elegant Greeting Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/15 backdrop-blur-md mb-6 animate-fade-in">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/15 backdrop-blur-md mb-3 animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="text-white/90 text-xs font-mono tracking-wider">
             Hello, I'm <span className="text-cyan-400 font-semibold">{portfolio.name}</span> 👋
           </span>
         </div>
 
+        {/* AI Audio Elevator Pitch Synthesizer */}
+        <AudioGreeting />
+
         {/* Value Proposition Main Headline */}
-        <h1 className="text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.15] mb-6">
+        <h1 className="text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.15] my-6">
           Architecting <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-cyan-400">Intelligent AI Systems</span> & ML Products
         </h1>
 

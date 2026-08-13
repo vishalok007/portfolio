@@ -15,7 +15,7 @@ export default function Navbar({ onOpenResume }: Props) {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = ["hero", "about", "skills", "projects", "playground", "experience", "contact"];
+      const sections = ["hero", "about", "skills", "projects", "playground", "benchmarks", "experience", "contact"];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
@@ -39,7 +39,8 @@ export default function Navbar({ onOpenResume }: Props) {
     { name: "About", href: "#about" },
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
-    { name: "AI Playground", href: "#playground" },
+    { name: "AI Sandbox", href: "#playground" },
+    { name: "ML Benchmarks", href: "#benchmarks" },
     { name: "Experience", href: "#experience" },
     { name: "Contact", href: "#contact" },
   ];
@@ -92,7 +93,7 @@ export default function Navbar({ onOpenResume }: Props) {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                   isActive
                     ? "bg-white text-black font-semibold shadow-lg shadow-white/10"
                     : "text-white/70 hover:text-white hover:bg-white/10"
