@@ -5,14 +5,60 @@ import { portfolio } from "../constants/portfolio";
 export default function AudioGreeting() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSupported, setIsSupported] = useState(true);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
 
   useEffect(() => {
     if (!("speechSynthesis" in window)) {
       setIsSupported(false);
+      return;
+    }
+
+    const updateVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+    };
+
+    updateVoices();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = updateVoices;
     }
   }, []);
 
-  const pitchText = `Hi! I'm ${portfolio.name}, a Data Science and AI Engineer. I specialize in building production-grade Machine Learning models, Large Language Model pipelines, RAG systems, and full-stack AI applications. Explore my portfolio to see live projects like my AI Career Advisor and automated Data Analyst platform!`;
+  const pitchText = `Welcome! I'm speaking on behalf of ${portfolio.name}, an AI and Data Science Engineer. Vishal specializes in building production-grade Machine Learning recommendation models, Large Language Model RAG pipelines, and automated analytics platforms. Feel free to explore his live Streamlit apps and interactive ML benchmarks below!`;
+
+  const getNaturalFemaleVoice = (): SpeechSynthesisVoice | null => {
+    if (voices.length === 0) return null;
+
+    // Filter English voices
+    const enVoices = voices.filter((v) => v.lang.startsWith("en"));
+
+    // Known high-quality natural female voices across browsers & OS (Chrome, Edge, Mac, Windows)
+    const femaleKeywords = [
+      "Google US English",
+      "Microsoft Aria",
+      "Microsoft Jenny",
+      "Microsoft Zira",
+      "Samantha",
+      "Victoria",
+      "Karen",
+      "Moira",
+      "Fiona",
+      "Natural (Female)",
+      "Neural"
+    ];
+
+    for (const keyword of femaleKeywords) {
+      const found = enVoices.find((v) => v.name.includes(keyword));
+      if (found) return found;
+    }
+
+    // Fallback: Find any English voice containing 'Female' or female names
+    const fallbackFemale = enVoices.find((v) =>
+      /female|woman|samantha|zira|aria|jenny|victoria/i.test(v.name)
+    );
+
+    return fallbackFemale || enVoices[0] || voices[0] || null;
+  };
 
   const toggleAudio = () => {
     if (!isSupported) return;
@@ -21,19 +67,16 @@ export default function AudioGreeting() {
       window.speechSynthesis.cancel();
       setIsPlaying(false);
     } else {
-      window.speechSynthesis.cancel(); // Stop any existing playback
+      window.speechSynthesis.cancel(); // Cancel any ongoing speech
       const utterance = new SpeechSynthesisUtterance(pitchText);
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
 
-      // Try to select a natural English voice if available
-      const voices = window.speechSynthesis.getVoices();
-      const preferredVoice = voices.find(
-        (v) => (v.lang.startsWith("en") && v.name.includes("Natural")) || v.name.includes("Google") || v.name.includes("Samantha")
-      ) || voices.find((v) => v.lang.startsWith("en"));
+      // Natural female speech settings
+      utterance.rate = 0.92; // Slightly slower pacing for natural clarity
+      utterance.pitch = 1.08; // Warm, natural female pitch curve
 
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
+      const selectedVoice = getNaturalFemaleVoice();
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
       }
 
       utterance.onend = () => setIsPlaying(false);
@@ -62,11 +105,11 @@ export default function AudioGreeting() {
 
       <div className="flex flex-col text-left">
         <span className="text-[11px] font-mono font-semibold text-white flex items-center gap-1.5">
-          {isPlaying ? "Playing AI Voice Greeting..." : "Listen to 15s AI Voice Pitch"}
+          {isPlaying ? "Playing Female AI Voice..." : "Listen to Natural AI Voice Pitch 🎙️"}
           <Sparkles className="w-3 h-3 text-cyan-400" />
         </span>
         <span className="text-[9px] font-mono text-cyan-400/80">
-          {isPlaying ? "Click to pause audio" : "Synthesized AI Elevator Pitch"}
+          {isPlaying ? "Click to pause audio" : "Natural Female AI Voice Intro"}
         </span>
       </div>
 
