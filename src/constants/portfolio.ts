@@ -148,8 +148,7 @@ export const portfolio = {
       description: "Production-grade Retrieval-Augmented Generation system capable of parsing PDF, DOCX, and CSV files with hybrid semantic search and Cohere reranking.",
       longDescription: "Built an intelligent document retrieval engine that processes heterogeneous business documents into vector embeddings stored in FAISS and ChromaDB. Utilizes dense vector search followed by cross-encoder reranking to achieve high precision before feeding context to LLMs.",
       tags: ["Python", "FastAPI", "FAISS", "LangChain", "Gemini API", "React"],
-      github: "https://github.com/vishalok007/portfolio",
-      demoUrl: "https://portfolio-flax-tau-ccf42iih03.vercel.app",
+      github: "https://github.com/vishalok007",
       featured: true,
       architecture: [
         "Document Parsing & Recursive Character Text Splitting",
@@ -169,8 +168,7 @@ export const portfolio = {
       description: "High-throughput sentiment analysis system fine-tuned on custom domain datasets with real-time stream evaluation.",
       longDescription: "Fine-tuned DistilBERT on customer review streams. Deployed as a high-concurrency FastAPI microservice with interactive visualization.",
       tags: ["PyTorch", "Hugging Face", "BERT", "FastAPI", "React", "Docker"],
-      github: "https://github.com/vishalok007/portfolio",
-      demoUrl: "https://portfolio-flax-tau-ccf42iih03.vercel.app",
+      github: "https://github.com/vishalok007",
       featured: false,
       architecture: [
         "DistilBERT fine-tuning using Hugging Face Trainer API",
@@ -212,6 +210,6 @@ export const portfolio = {
     linkedin: "https://linkedin.com/in/vishalkumar-ai",
     twitter: "https://x.com/vishalkumar_ai",
     email: "vishal878937raj@gmail.com",
-    resumeUrl: "#"
+    resumeUrl: "/Vishal_Kumar_AI_Engineer_Resume.pdf"
   }
 };

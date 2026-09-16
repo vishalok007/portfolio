@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Volume2, Play, Pause, Sparkles } from "lucide-react";
 import { portfolio } from "../constants/portfolio";
 
@@ -6,7 +6,6 @@ export default function AudioGreeting() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSupported, setIsSupported] = useState(true);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (!("speechSynthesis" in window)) {
@@ -69,24 +68,11 @@ export default function AudioGreeting() {
     if (!isSupported) return;
 
     if (isPlaying) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
       window.speechSynthesis.cancel();
       setIsPlaying(false);
     } else {
       window.speechSynthesis.cancel();
-
-      // Check if custom studio MP3 file exists in public/audio/intro.mp3
-      if (audioRef.current && audioRef.current.src) {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          playSpeechSynth();
-        });
-      } else {
-        playSpeechSynth();
-      }
+      playSpeechSynth();
     }
   };
 
@@ -113,13 +99,6 @@ export default function AudioGreeting() {
 
   return (
     <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-900/90 border border-cyan-500/30 backdrop-blur-xl shadow-xl shadow-cyan-950/40 animate-fade-in my-3 group">
-      {/* Hidden audio element for custom studio MP3 */}
-      <audio
-        ref={audioRef}
-        src="/audio/intro.mp3"
-        onEnded={() => setIsPlaying(false)}
-        onError={() => { /* fallback gracefully to neural TTS */ }}
-      />
 
       <button
         onClick={toggleAudio}

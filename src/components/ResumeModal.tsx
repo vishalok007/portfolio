@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileText, Download, X, GraduationCap, Briefcase, Code2, Sparkles, Mail, MapPin, ExternalLink } from "lucide-react";
+import { FileText, Download, X, GraduationCap, Briefcase, Code2, Sparkles, Mail, MapPin, ExternalLink, Printer } from "lucide-react";
 import { portfolio } from "../constants/portfolio";
 
 type Props = {
@@ -9,6 +9,10 @@ type Props = {
 
 export default function ResumeModal({ isOpen, onClose }: Props) {
   const [activeTab, setActiveTab] = useState<"visual" | "document">("visual");
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   if (!isOpen) return null;
 
@@ -83,11 +87,20 @@ ${portfolio.skillsCategories.map(c => `${c.category}: ${c.skills.map(s => s.name
             </div>
 
             <button
+              onClick={handlePrint}
+              className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs transition-all flex items-center gap-1.5"
+              title="Print or Save as PDF"
+            >
+              <Printer className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="hidden sm:inline">Print / Save PDF</span>
+            </button>
+
+            <button
               onClick={handleDownload}
               className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs btn-cut hover:bg-cyan-300 transition-all flex items-center gap-1.5 shadow-lg"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Download Resume</span>
+              <span>Download Text</span>
             </button>
 
             <button
@@ -263,13 +276,23 @@ ${portfolio.skillsCategories.map(c => `${c.category}: ${c.skills.map(s => s.name
                 <span className="flex items-center gap-1.5 text-emerald-400">
                   <Sparkles className="w-3.5 h-3.5" /> Ready for AI Engineering Roles
                 </span>
-                <button
-                  onClick={handleDownload}
-                  className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs btn-cut hover:bg-cyan-300 transition-all flex items-center gap-1.5"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download Resume File</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handlePrint}
+                    className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs transition-all flex items-center gap-1.5"
+                    title="Print or Save as PDF"
+                  >
+                    <Printer className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>Print / PDF</span>
+                  </button>
+                  <button
+                    onClick={handleDownload}
+                    className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs btn-cut hover:bg-cyan-300 transition-all flex items-center gap-1.5"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download Text</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
