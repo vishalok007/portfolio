@@ -119,9 +119,10 @@ export default function AIChatAssistant() {
     Key Projects:
     1. AI Career Advisor - Streamlit Live Demo: https://dqpxbjdk4lkej2v9uayhcp.streamlit.app/
     2. AI Data Analyst - Streamlit Live Demo: https://3cibvktrrltbwhrdg39ieh.streamlit.app/
-    3. Enterprise Document RAG Pipeline
-    4. Real-Time NLP Sentiment Analyzer
-    Skills: Recommendation Systems, RAG, Python, PyTorch, Scikit-Learn, FastAPI, React, TypeScript, Vector Databases (FAISS, Chroma).
+    3. IIT JAM CBT Exam Portal - High-Fidelity TCS iON Exam Simulator (JAM-MA): https://github.com/vishalok007/JAM-MA
+    4. Enterprise Document RAG Pipeline
+    5. Real-Time NLP Sentiment Analyzer
+    Skills: Recommendation Systems, RAG, Python, PyTorch, Scikit-Learn, FastAPI, React 19, TypeScript, KaTeX, Vector Databases (FAISS, Chroma).
   `;
 
   const generateAIResponse = async (userQuery: string): Promise<string> => {
@@ -166,8 +167,8 @@ export default function AIChatAssistant() {
       return `Vishal specializes in **Machine Learning & Generative AI**.\n\nCore technical skills include **Python**, **PyTorch**, **Scikit-Learn**, **LangChain**, **RAG**, **FAISS Vector Search**, **FastAPI**, and **React 19 with TypeScript**.`;
     }
 
-    if (q.includes("project") || q.includes("career advisor") || q.includes("data analyst") || q.includes("rag")) {
-      return `Vishal has built flagship live projects:\n\n🎯 **AI Career Advisor**: Intelligent ML Recommendation System ([Live Streamlit App](https://dqpxbjdk4lkej2v9uayhcp.streamlit.app/))\n\n📊 **AI Data Analyst**: Automated EDA & AutoML Platform ([Live Streamlit App](https://3cibvktrrltbwhrdg39ieh.streamlit.app/))\n\n⚡ **Enterprise RAG Pipeline**: Multi-modal document search with FAISS & reranking.`;
+    if (q.includes("project") || q.includes("career advisor") || q.includes("data analyst") || q.includes("jam") || q.includes("iit") || q.includes("rag")) {
+      return `Vishal has built flagship live projects:\n\n🎯 **AI Career Advisor**: Intelligent ML Recommendation System ([Live Streamlit App](https://dqpxbjdk4lkej2v9uayhcp.streamlit.app/))\n\n📊 **AI Data Analyst**: Automated EDA & AutoML Platform ([Live Streamlit App](https://3cibvktrrltbwhrdg39ieh.streamlit.app/))\n\n🏛️ **IIT JAM CBT Exam Portal**: TCS iON Exam Simulator with KaTeX & Virtual Calculator ([GitHub Repo](https://github.com/vishalok007/JAM-MA))\n\n⚡ **Enterprise RAG Pipeline**: Multi-modal document search with FAISS & reranking.`;
     }
 
     if (q.includes("education") || q.includes("degree") || q.includes("university") || q.includes("college")) {

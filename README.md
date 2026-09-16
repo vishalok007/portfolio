@@ -1,9 +1,10 @@
 # Vishal Kumar — AI Engineer & Data Science Specialist Portfolio
 
 > **Live Portfolio:** [portfolio-flax-tau-ccf42iih03.vercel.app](https://portfolio-flax-tau-ccf42iih03.vercel.app)  
-> **Flagship AI Systems:**
+> **Flagship AI Systems & Platforms:**
 > - [AI Career Advisor (Streamlit Cloud)](https://dqpxbjdk4lkej2v9uayhcp.streamlit.app/)
 > - [AI Data Analyst Platform (Streamlit Cloud)](https://3cibvktrrltbwhrdg39ieh.streamlit.app/)
+> - [IIT JAM CBT Exam Portal (GitHub Repo)](https://github.com/vishalok007/JAM-MA)
 
 ---
 

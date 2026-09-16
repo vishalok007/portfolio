@@ -55,8 +55,8 @@ export const portfolio = {
     location: "India",
     availability: "Available for AI Engineering Roles & Collaborations",
     stats: [
-      { label: "Real AI Projects Deployed", value: "4+" },
-      { label: "Live Streamlit Apps", value: "2+" },
+      { label: "Real Projects Built", value: "5+" },
+      { label: "Live Apps & Portals", value: "3+" },
       { label: "Github Repositories", value: "10+" },
       { label: "Core Tech Stack", value: "12+" }
     ]
@@ -138,6 +138,28 @@ export const portfolio = {
         { label: "Automated Insights", value: "Instant" },
         { label: "Live App", value: "Streamlit Cloud" },
         { label: "Status", value: "Production Deployed" }
+      ]
+    },
+    {
+      id: "iit-jam-cbt",
+      title: "IIT JAM CBT Exam Portal",
+      subtitle: "Full-Featured Computer-Based Test Simulator with TCS iON Architecture",
+      category: "Full Stack",
+      description: "A comprehensive Computer-Based Test (CBT) preparation platform designed for IIT JAM Mathematics (MA) and Mathematical Statistics (MS) aspirants, replicating the exact TCS iON exam environment.",
+      longDescription: "Engineered a high-fidelity Computer-Based Test (CBT) simulator simulating official IIT JAM examination conditions. Features Section A (MCQs with negative marking), Section B (MSQs with strict zero partial marking), Section C (Numerical Answer Types NATs with tolerance verification), an integrated virtual scientific calculator, KaTeX mathematical typesetting, real-time countdown timer with auto-submit, interactive color-coded question palette, and 30+ full-length mock tests.",
+      tags: ["React 19", "TypeScript", "Tailwind CSS", "KaTeX", "Vite", "Vitest", "CBT Simulator"],
+      github: "https://github.com/vishalok007/JAM-MA",
+      featured: true,
+      architecture: [
+        "TCS iON CBT Exam Engine (Section A MCQs, Section B MSQs, Section C NAT with Range Checking)",
+        "Client-Side KaTeX Typesetting for Complex Higher Mathematics & Statistical Formulas",
+        "Interactive Virtual Scientific Calculator conforming to IIT JAM official exam norms",
+        "Automated Real-Time Scoring, Negative Marking Matrix & In-Depth Analytics"
+      ],
+      metrics: [
+        { label: "Exam Pattern", value: "TCS iON CBT" },
+        { label: "Question Types", value: "MCQ + MSQ + NAT" },
+        { label: "Mock Tests", value: "30+ Papers" }
       ]
     },
     {
